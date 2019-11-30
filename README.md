@@ -10,4 +10,6 @@ As we can see here the transition between the two regions is not seamless.
 ![Not seamless transition between regions](Preview/old.png)
 
 
+![Not seamless transition between regions](Preview/update.png)
+
 

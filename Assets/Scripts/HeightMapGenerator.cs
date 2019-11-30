@@ -59,11 +59,18 @@ public static class HeightMapGenerator
                 float valueMultiEast = valueEast * heightCurve_threadsafe_East.Evaluate(valueEast) * eastSettings.heightMultiplier;
                 float valueMultiWest = valueWest * heightCurve_threadsafe_West.Evaluate(valueWest) * westSettings.heightMultiplier;
 
+                if (i==j && i % 40  == 0)
+                {
 
-                float heightEast = Mathf.Lerp(valueMultiCenter, valueMultiEast, distanceEast / distanceEastCenter);
-                float heighWest = Mathf.Lerp(valueMultiCenter, valueMultiWest, distanceWest / distanceWestCenter);
+                    Debug.Log("height at " + position + ": centre " + valueMultiCenter + " east " + valueMultiEast + " lerp e" + distanceEast + " ec" + distanceEastCenter + " e/c" + distanceEast / distanceEastCenter);
+                }
+                float lerpEast = Mathf.Clamp(position.magnitude / distanceEastCenter, 0, 1);
+                float lerpWest = Mathf.Clamp(position.magnitude / distanceWestCenter, 0, 1);
 
-                float heightData; 
+                float heightEast = Mathf.Lerp(valueMultiEast, valueMultiCenter, 1-lerpEast);
+                float heighWest = Mathf.Lerp(valueMultiWest, valueMultiCenter, 1-lerpWest);
+
+                float heightData;
 
                 if (distanceEast > distanceWest)
                 {

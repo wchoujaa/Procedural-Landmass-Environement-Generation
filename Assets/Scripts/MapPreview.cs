@@ -148,7 +148,7 @@ public class MapPreview : MonoBehaviour
  
         eastLocationPos = eastLocation.position;
         westLocationPos = westLocation.position;
-        StartCoroutine(WaitAndCheck(0.05f));
+        StartCoroutine(WaitAndCheck(0.1f));
 
     }
 
