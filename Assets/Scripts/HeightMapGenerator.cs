@@ -39,13 +39,13 @@ public static class HeightMapGenerator
                 float x = (i - vertexWidth / 2) * worldScale / vertexScale + region.localisation.x;
                 float z = (j - vertexHeight / 2) * worldScale / vertexScale + region.localisation.z;
 
-                Vector3 position = new Vector3(x, 0, z);
+                Vector3 position = new Vector3(x, 0, -z);
                 Vector3 eastRegion = region.east.localisation;
                 Vector3 westRegion = region.west.localisation;
 
                 float distanceEastCenter = Vector3.Distance(centre, eastRegion);
                 float distanceWestCenter = Vector3.Distance(centre, westRegion);
-                
+
                 float distanceEast = Vector3.Distance(position, eastRegion);
                 float distanceWest = Vector3.Distance(position, westRegion);
 
@@ -63,7 +63,7 @@ public static class HeightMapGenerator
                 float heightEast = Mathf.Lerp(valueMultiCenter, valueMultiEast, distanceEast / distanceEastCenter);
                 float heighWest = Mathf.Lerp(valueMultiCenter, valueMultiWest, distanceWest / distanceWestCenter);
 
-                float heightData;
+                float heightData; 
 
                 if (distanceEast > distanceWest)
                 {
@@ -74,6 +74,7 @@ public static class HeightMapGenerator
                     heightData = heighWest;
                 }
 
+                //heightData = (heightEast + heighWest) /2;
 
 
                 if (heightData > maxValue)

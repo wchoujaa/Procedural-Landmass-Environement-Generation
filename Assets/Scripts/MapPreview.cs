@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System;
+using UnityEditor;
 
 [Serializable]
 public struct DataRegion
@@ -8,14 +9,17 @@ public struct DataRegion
     public Vector3 localisation;
     public HeightMapSettings settings;
 }
+[ExecuteInEditMode]
 public class MapPreview : MonoBehaviour
 {
- 
+
     public Renderer textureRender;
     public MeshFilter meshFilter;
     public MeshRenderer meshRenderer;
-    public Vector3 eastLocation;
-    public Vector3 westLocation;
+    public Transform eastLocation;
+    public Transform westLocation;
+    public Vector3 eastLocationPos = Vector3.zero;
+    public Vector3 westLocationPos = Vector3.zero;
     public HeightMapSettings eastSettings;
     public HeightMapSettings westSettings;
 
@@ -40,14 +44,14 @@ public class MapPreview : MonoBehaviour
 
     public void DrawMapInEditor()
     {
- 
+
         textureData.ApplyToMaterial(terrainMaterial);
         textureData.UpdateMeshHeights(terrainMaterial, heightMapSettings.minHeight, heightMapSettings.maxHeight);
         HeightMap heightMap;
-        if (eastSettings != null && westSettings != null)
+        if (eastSettings != null && westSettings != null && westLocation != null && westLocation != null)
         {
-            Region east = new Region(eastSettings, eastLocation);
-            Region west = new Region(westSettings, westLocation);
+            Region east = new Region(eastSettings, eastLocationPos);
+            Region west = new Region(westSettings, westLocationPos);
             heightMap = HeightMapGenerator.GenerateHeightMap(meshSettings, new Region(heightMapSettings, east, west, Vector3.zero), Vector2.zero);
         }
         else
@@ -124,7 +128,7 @@ public class MapPreview : MonoBehaviour
             textureData.OnValuesUpdated -= OnTextureValuesUpdated;
             textureData.OnValuesUpdated += OnTextureValuesUpdated;
         }
-        if(eastSettings != null)
+        if (eastSettings != null)
         {
             eastSettings.OnValuesUpdated -= OnValuesUpdated;
             eastSettings.OnValuesUpdated += OnValuesUpdated;
@@ -135,6 +139,27 @@ public class MapPreview : MonoBehaviour
             westSettings.OnValuesUpdated += OnValuesUpdated;
         }
 
+
     }
 
+    void Update()
+    {
+        if (eastLocation == null || westLocation == null) return;
+ 
+        eastLocationPos = eastLocation.position;
+        westLocationPos = westLocation.position;
+        StartCoroutine(WaitAndCheck(0.05f));
+
+    }
+
+ 
+    IEnumerator WaitAndCheck(float waittime)
+    {
+        yield return new WaitForSeconds(waittime);
+         if (eastLocationPos == eastLocation.position || westLocationPos == westLocation.position)
+        {
+            DrawMapInEditor();
+        }
+ 
+    }
 }
