@@ -2,7 +2,7 @@
 
 this is a fork of the Procedural landmass project made by Sebastian Lague available (here)[https://github.com/SebLague/Procedural-Landmass-Generation]
 
-This project aim is to add a variation to the generated world by adding regions with specific Heightmap settings.
+This project aim is to add a variation to the generated world by adding regions with specific Heightmap settings, and blending them together.
 
 # Preview
 
