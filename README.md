@@ -4,12 +4,12 @@ this is a fork of the Procedural landmass project made by Sebastian Lague availa
 
 This project aim is to add a variation to the generated world by adding regions with specific Heightmap settings.
 
-# Preview
-
+ 
 As we can see here the transition between the two regions is not seamless.
 ![Not seamless transition between regions](Preview/old.png)
 
+# Result 
 
-![Not seamless transition between regions](Preview/update.png)
+![Two regions](Preview/gif.gif)
 
 

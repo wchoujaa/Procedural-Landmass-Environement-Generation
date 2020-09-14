@@ -33,12 +33,13 @@ public class MapPreview : MonoBehaviour
 
     public Material terrainMaterial;
 
-
-
+    [Range(0, 10)]
+    public float power = 0.1f;
     [Range(0, MeshSettings.numSupportedLODs - 1)]
     public int editorPreviewLOD;
     public bool autoUpdate;
 
+   
 
 
 
@@ -52,7 +53,7 @@ public class MapPreview : MonoBehaviour
         {
             Region east = new Region(eastSettings, eastLocationPos);
             Region west = new Region(westSettings, westLocationPos);
-            heightMap = HeightMapGenerator.GenerateHeightMap(meshSettings, new Region(heightMapSettings, east, west, Vector3.zero), Vector2.zero);
+            heightMap = HeightMapGenerator.GenerateHeightMap(meshSettings, new Region(heightMapSettings, east, west, Vector3.zero, power), Vector2.zero);
         }
         else
         {
@@ -142,13 +143,13 @@ public class MapPreview : MonoBehaviour
 
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (eastLocation == null || westLocation == null) return;
  
         eastLocationPos = eastLocation.position;
         westLocationPos = westLocation.position;
-        StartCoroutine(WaitAndCheck(0.1f));
+        StartCoroutine(WaitAndCheck(0.3f));
 
     }
 
